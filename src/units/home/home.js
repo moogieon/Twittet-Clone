@@ -4,9 +4,9 @@ import Tweet from "../../components/tweet/tweet";
 import axios from "axios";
 import { TwitterOutlined } from "@ant-design/icons";
 import { Wrapper, LefBody, RightBody, RightHead } from "./home.styles";
-
+// var Twitter = require("twitter");
+const Twitter = require("twitter-v2");
 export default function Home() {
-  const Twitter = require("twitter-v2");
   const client = new Twitter({
     consumer_key: "EoJOLMWI5N0k7FETGRNqkV2KL",
     consumer_secret: "Z85OkbXavlgPIrFqkbITF345W0tM9Djz9Vo0Qykw8Hg5nHF3uh",
@@ -15,6 +15,16 @@ export default function Home() {
   });
   useEffect(() => {
     async function getData() {
+      client.get(
+        "search/tweets",
+        { q: "#cat", count: 10 },
+        function (error, tweets, response) {
+          if (error) throw error;
+          console.log(tweets); // The favorites.
+          console.log(response); // Raw response object.
+        },
+      );
+
       // try {
       // const { q, count } = this.state;
       // const q = "cat";
@@ -46,11 +56,7 @@ export default function Home() {
     }
     getData();
   }, []);
-  const { data } = client.get("search/tweets", {
-    q: "#cat",
-    count: 5,
-  });
-  console.log(data);
+
   const [tweetsList, updateTweetsList] = React.useState([]);
   const [inputValue, updateInputValue] = React.useState("");
 
