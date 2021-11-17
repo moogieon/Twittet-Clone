@@ -1,51 +1,51 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Search from "../../components/search/search";
 import Tweet from "../../components/tweet/tweet";
 import axios from "axios";
+
 import { TwitterOutlined } from "@ant-design/icons";
 import { Wrapper, LefBody, RightBody, RightHead } from "./home.styles";
 // var Twitter = require("twitter");
-const Twitter = require("twitter-v2");
-export default function Home() {
-  const client = new Twitter({
-    consumer_key: "EoJOLMWI5N0k7FETGRNqkV2KL",
-    consumer_secret: "Z85OkbXavlgPIrFqkbITF345W0tM9Djz9Vo0Qykw8Hg5nHF3uh",
-    access_token_key: "1458701767257255936-fHBfi2YPB04Tp8NKRvUILGal62HcXN",
-    access_token_secret: "Dwy0lSY4JRSHRywne70P8yy4NFcq8f1NWo4DI1sL1sK8I",
-  });
-  useEffect(() => {
-    async function getData() {
-      client.get(
-        "search/tweets",
-        { q: "#cat", count: 10 },
-        function (error, tweets, response) {
-          if (error) throw error;
-          console.log(tweets); // The favorites.
-          console.log(response); // Raw response object.
-        },
-      );
+// const Twitter = require("twitter-v2");
 
+export default function Home() {
+  const [item, setItem] = useState([]);
+  // const T = new Twitter({
+  //   consumer_key: "EoJOLMWI5N0k7FETGRNqkV2KL",
+  //   consumer_secret: "Z85OkbXavlgPIrFqkbITF345W0tM9Djz9Vo0Qykw8Hg5nHF3uh",
+  //   access_token_key: "1458701767257255936-fHBfi2YPB04Tp8NKRvUILGal62HcXN",
+  //   access_token_secret: "Dwy0lSY4JRSHRywne70P8yy4NFcq8f1NWo4DI1sL1sK8I",
+  // });
+  useEffect(() => {
+    async function getData(params) {
+      // if (error) {
+      //   console.log("Error: ", error.message);
+      // } else {
+      //   console.log(tweets);
+      //   console.log(response);
+      // }
+      // T.get("search/tweets", { q: "#cat", count: 10 });
       // try {
       // const { q, count } = this.state;
       // const q = "cat";
       // const count = 5;
-      // const url = "https://api.twitter.com/1.1/search/tweets.json";
+      // const url = "https://api.twitter.com/2/search/tweets.json";
       // const params = new URLSearchParams();
       // params.append("q", q);
       // params.append("count", count);
-      // await fetch(`${url}?${params}`, {
+      // await axios(`${url}?${params}`, {
       //   headers: {
       //     Authorization:
       //       "bearer AAAAAAAAAAAAAAAAAAAAAAkDVwEAAAAA8Wr%2FY7UwyFdlj1lDdn0bESMmcd4%3DxPNQgNxTdSiEJQLOYbrjbR0IfPzgYPz4DVkLTpnRJaueA5Lpep",
       //   },
-      // }).then((res) => console.log(res.json()));
+      // }).then((res) => setItem(res.json()));
       // response = await response.json();
       // const res = await axios.get(
-      //   "https://api.twitter.com/2/tweets/search/stream?tweet.fields=created_at&expansions=author_id&user.fields=created_at",
+      //   "https://coursera-twitter-api.herokuapp.com/tweets",
       //   {
       //     headers: {
       //       "Content-Type": "application/json",
-      //       Authorization: `Bearer AAAAAAAAAAAAAAAAAAAAADi8VgEAAAAAsGzb5kStzLoCI3IQgnwjxdrSxzA%3DodZoF1nVHW6YKOJ1YxWHPvByuIKQLKCaj7caei48TWKhB3AjWZ`,
+      //       Authorization: `Bearer AAAAAAAAAAAAAAAAAAAAADi8VgEAAAAAL6PG0WubOpuhQbLTQNNIqflUziw%3DuVx9qmwE84zpL9Gv1hEKgZHad4P0wmWyMSjpjupR4W3nAH6M98`,
       //     },
       //   },
       // );
@@ -54,9 +54,10 @@ export default function Home() {
       //   console.log(error.message);
       // }
     }
+
     getData();
   }, []);
-
+  console.log("데이터", item);
   const [tweetsList, updateTweetsList] = React.useState([]);
   const [inputValue, updateInputValue] = React.useState("");
 
